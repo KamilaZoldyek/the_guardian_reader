@@ -39,42 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getNews(String page_number){
-
-        Call<News> call2 = ApiClient.getInstance().getApi().getNews(page_number, API_KEY);
-        call2.enqueue(new Callback<News>() {
-            List<Result> list_news = new ArrayList<>();
-            @Override
-            public void onResponse(Call<News> call, retrofit2.Response<News> response) {
-                if(!response.isSuccessful()){
-                    textViewResult.setText("Code: "+ response.code());
-                    if (response.code()==401) {
-                        textViewResult.setText("Code 401: Unauthorized \n\n" );
-                    }
-
-                    return;
-                }
-                list_news = response.body().getResponse().getResults();
-
-                for (Result news : list_news){
-                    String content = "";
-                    content += "Title: " + news.getWebTitle() + "\n";
-                    content += "Section: " + news.getSectionName() + "\n";
-                    content += "Date: " + news.getWebPublicationDate() + "\n\n";
-                    textViewResult.append(content);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<News> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
-
-            }
-        });
-
-
-
-    }
 
 
 }
