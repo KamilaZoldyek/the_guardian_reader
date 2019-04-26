@@ -1,44 +1,53 @@
 package com.example.kamilazoldyek.theguardianreader.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
-import com.example.kamilazoldyek.theguardianreader.api.Api;
-import com.example.kamilazoldyek.theguardianreader.api.ApiClient;
-import com.example.kamilazoldyek.theguardianreader.model.News;
-import com.example.kamilazoldyek.theguardianreader.model.Response;
-import com.example.kamilazoldyek.theguardianreader.model.Result;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.API_KEY;
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.MAIN_QUERY;
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.TEST_TAG;
+import static com.example.kamilazoldyek.theguardianreader.constants.Constants.ALL_NEWS;
+import static com.example.kamilazoldyek.theguardianreader.constants.Constants.WORLD_NEWS;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textViewResult;
-
+    private Button all_button;
+    private Button worldNews_button;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-       // textViewResult = findViewById(R.id.text_view_result);
-        //getNews("1");
+
+        all_button = findViewById(R.id.button_all);
+        worldNews_button = findViewById(R.id.button_world);
+
+        all_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                query_sender(ALL_NEWS);
+                }
+        });
+
+        worldNews_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                query_sender(WORLD_NEWS);
+            }
+        });
 
     }
 
+    public void query_sender(String query){
+        Intent intent = new Intent (MainActivity.this, HeadlineListActivity.class);
+        intent.putExtra("QUERY", query);
+        intent.putExtra("PAGE", 1);
+        startActivity(intent);
 
+    }
 
 }

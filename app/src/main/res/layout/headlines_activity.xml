@@ -32,7 +32,7 @@
            </view>
 
            <Button
-               android:id="@+id/button"
+               android:id="@+id/next_page_button"
                android:layout_width="300dp"
                android:layout_height="wrap_content"
                android:layout_gravity="center"

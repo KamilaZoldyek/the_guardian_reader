@@ -2,8 +2,10 @@ package com.example.kamilazoldyek.theguardianreader.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.kamilazoldyek.theguardianreader.R;
@@ -32,21 +34,37 @@ public class HeadlineListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.headlines_activity);
+        setContentView(R.layout.activity_teste);
 
+        final String search_query = getIntent().getStringExtra("QUERY");
+        int page_number = getIntent().getIntExtra("PAGE", 1);
+        final int next_page = page_number++;
 
+        recyclerView = findViewById(R.id.recyclerView);
+        resultList = new ArrayList<>();
+        nextButton = findViewById(R.id.next_page_button);
 
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              getNews(search_query, String.valueOf(next_page));
+
+            }
+        });
+
+        getNews(search_query, String.valueOf(page_number));
     }
 
+    public void setupRecyclerView(List<Result> resultList){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerAdapter(resultList, HeadlineListActivity.this);
+        recyclerView.setAdapter(mAdapter);
+    }
 
+    public void getNews(String query, String page_number){
 
-
-
-
-
-    private void getNews(String page_number){
-
-        Call<News> call2 = ApiClient.getInstance().getApi().getNews(page_number, API_KEY);
+        Call<News> call2 = ApiClient.getInstance().getApi().getNews(query, page_number, API_KEY);
         call2.enqueue(new Callback<News>() {
             List<Result> list_news = new ArrayList<>();
             @Override
@@ -56,17 +74,18 @@ public class HeadlineListActivity extends AppCompatActivity {
                     if (response.code()==401) {
                         Log.i(TEST_TAG,"Code 401: Unauthorized \n\n" );
                     }
-
                     return;
                 }
                 list_news = response.body().getResponse().getResults();
+                setupRecyclerView(list_news);
 
+//
 //                for (Result news : list_news){
 //                    String content = "";
 //                    content += "Title: " + news.getWebTitle() + "\n";
 //                    content += "Section: " + news.getSectionName() + "\n";
 //                    content += "Date: " + news.getWebPublicationDate() + "\n\n";
-//                    textViewResult.append(content);
+//                    Log.i(TEST_TAG,"Successful: " + content );
 //                }
             }
 

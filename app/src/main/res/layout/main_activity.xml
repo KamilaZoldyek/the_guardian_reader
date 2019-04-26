@@ -44,7 +44,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <Button
-            android:id="@+id/button_newest"
+            android:id="@+id/button_all"
+            android:onClick="query_sender"
             android:layout_width="150dp"
             android:layout_height="52dp"
             android:layout_marginStart="161dp"
@@ -58,6 +59,7 @@
             android:textSize="@dimen/button_text_size" />
         <Button
             android:id="@+id/button_world"
+            android:onClick="query_sender"
             android:layout_width="150dp"
             android:layout_height="52dp"
             android:layout_marginStart="161dp"
