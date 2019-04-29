@@ -21,11 +21,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-
                 android:fontFamily="sans-serif"
                 android:gravity="center"
+                android:textSize="18sp"
                 android:text="Newest headlines"
-                android:textSize="18sp" />
+                 />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -41,15 +41,29 @@
 
             <LinearLayout
                 android:id="@+id/next"
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="vertical">
+                android:layout_height="60dp">
 
                 <ImageView
-                    android:id="@+id/next_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/previous_imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_previous" />
+
+                <TextView
+                    android:id="@+id/pageTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Page 1234"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/next_imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:srcCompat="@drawable/ic_next" />
             </LinearLayout>
 

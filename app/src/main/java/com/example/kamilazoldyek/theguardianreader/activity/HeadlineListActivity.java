@@ -8,15 +8,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.adapter.RecyclerAdapter;
 import com.example.kamilazoldyek.theguardianreader.api.ApiClient;
 import com.example.kamilazoldyek.theguardianreader.model.News;
 import com.example.kamilazoldyek.theguardianreader.model.Result;
+import com.example.kamilazoldyek.theguardianreader.util.LocalData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +33,13 @@ public class HeadlineListActivity extends AppCompatActivity {
     public RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
     private List<Result> resultList;
-    private LinearLayout nextButton;
+    private ImageView previousImageView;
+    private ImageView nextImageView;
+    private TextView pageTV;
     private NestedScrollView scrollView;
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
+    private LocalData localData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,32 +48,70 @@ public class HeadlineListActivity extends AppCompatActivity {
         setContentView(R.layout.headlines_activity);
 
         final String search_query = getIntent().getStringExtra("QUERY");
-        int page_number = getIntent().getIntExtra("PAGE", 1);
-        final int next_page = page_number++;
+        final int page_number = getIntent().getIntExtra("PAGE", 1);
 
 
         recyclerView = findViewById(R.id.recyclerView);
-        nextButton = findViewById(R.id.next);
-        resultList = new ArrayList<>();
+        nextImageView = findViewById(R.id.next_imageView);
         scrollView = findViewById(R.id.scrollView);
+        previousImageView = findViewById(R.id.previous_imageView);
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
+        pageTV = findViewById(R.id.pageTV);
+
+        localData = new LocalData(HeadlineListActivity.this);
+        localData.setCurrentPage(page_number);
+
+        resultList = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(HeadlineListActivity.this);
 
+        progressBar.setVisibility(View.GONE);
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        if (localData.getCurrentPage() == 1) {
+            previousImageView.setVisibility(View.GONE);
+            pageTV.setText("Page " + page_number);
+        }else{
+            previousImageView.setVisibility(View.VISIBLE);
+        }
+
+
+        nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              getNews(search_query, String.valueOf(next_page));
-              scrollView.setScrollY(0);
+                int next = localData.getCurrentPage() + 1;
+                getNews(search_query, String.valueOf(next));
+                pageTV.setText("Page " + next);
+                localData.setCurrentPage(next);
+                previousImageView.setVisibility(View.VISIBLE);
+                scrollView.setScrollY(0);
 
             }
         });
 
+        previousImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int prev = localData.getCurrentPage() - 1;
+                if (prev < 1) {
+                    getNews(search_query, "1");
+                    pageTV.setText("Page " + 1);
+                    localData.setCurrentPage(1);
+                    scrollView.setScrollY(0);
+                    previousImageView.setVisibility(View.GONE);
+                } else {
+                    getNews(search_query, String.valueOf(prev));
+                    pageTV.setText("Page " + prev);
+                    localData.setCurrentPage(prev);
+                    scrollView.setScrollY(0);
+                }
+
+            }
+        });
+
+
         getNews(search_query, String.valueOf(page_number));
     }
 
-    public void setupRecyclerView(List<Result> resultList){
+    public void setupRecyclerView(List<Result> resultList) {
         recyclerAdapter = new RecyclerAdapter(resultList, HeadlineListActivity.this);
 
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -79,34 +121,38 @@ public class HeadlineListActivity extends AppCompatActivity {
 
     }
 
-    public void getNews(String query, String page_number){
+    public void getNews(String searchQuery, String currentPage) {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<News> call2 = ApiClient.getInstance().getApi().getNews(query, page_number, API_KEY);
+        Call<News> call2 = ApiClient.getInstance().getApi().getNews(searchQuery, currentPage, API_KEY);
         call2.enqueue(new Callback<News>() {
             List<Result> list_news = new ArrayList<>();
+
             @Override
             public void onResponse(Call<News> call, retrofit2.Response<News> response) {
-                if(!response.isSuccessful()){
-                    Log.i(TEST_TAG, "Code: "+ response.code());
-                    if (response.code()==401) {
-                        Log.i(TEST_TAG,"Code 401: Unauthorized \n\n" );
+                if (!response.isSuccessful()) {
+                    Log.i(TEST_TAG, "Code: " + response.code());
+                    if (response.code() == 401) {
+                        Log.i(TEST_TAG, "Code 401: Unauthorized \n\n");
                     }
                     return;
                 }
-                list_news = response.body().getResponse().getResults();
-                progressBar.setVisibility(View.GONE);
-                setupRecyclerView(list_news);
 
-//
-//                for (Result news : list_news){
-//                    String content = "";
-//                    content += "Title: " + news.getWebTitle() + "\n";
-//                    content += "Section: " + news.getSectionName() + "\n";
-//                    content += "Date: " + news.getWebPublicationDate() + "\n\n";
-//                    Log.i(TEST_TAG,"Successful: " + content );
-//                }
+                list_news = response.body().getResponse().getResults();
+                String page = response.body().response.currentPage.toString();
+                progressBar.setVisibility(View.GONE);
+
+
+                for (Result news : list_news) {
+                    String content = "\n\n";
+                    content += "Page: " + page + "\n";
+                    content += "Title: " + news.getWebTitle() + "\n";
+                    content += "Section: " + news.getSectionName() + "\n";
+                    Log.i(TEST_TAG, content);
+                }
+
+                setupRecyclerView(list_news);
             }
 
             @Override
@@ -115,7 +161,6 @@ public class HeadlineListActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
