@@ -1,4 +1,4 @@
-package com.example.kamilazoldyek.theguardianreader.constants;
+package com.example.kamilazoldyek.theguardianreader.util;
 
 public class Constants {
 

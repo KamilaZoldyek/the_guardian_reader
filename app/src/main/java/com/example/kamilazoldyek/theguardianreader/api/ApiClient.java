@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.BASE_URL;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.BASE_URL;
 
 public class ApiClient {
 

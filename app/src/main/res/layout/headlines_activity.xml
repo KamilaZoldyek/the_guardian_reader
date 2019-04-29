@@ -8,6 +8,7 @@
     tools:context=".activity.MainActivity">
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,28 +20,38 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_margin="16dp"
+
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="Newest headlines"
                 android:textSize="18sp" />
 
-            <view
-                android:id="@+id/recyclerView"
-                class="android.support.v7.app.AlertController$RecycleListView"
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical">
+                android:layout_gravity="center" />
 
-            </view>
 
-            <ImageView
-                android:id="@+id/next_layout"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:srcCompat="@drawable/ic_next" />
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/next_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    app:srcCompat="@drawable/ic_next" />
+            </LinearLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -1,12 +1,16 @@
 package com.example.kamilazoldyek.theguardianreader.activity;
 
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.adapter.RecyclerAdapter;
@@ -20,34 +24,44 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.API_KEY;
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.TEST_TAG;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.API_KEY;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.TEST_TAG;
 
 public class HeadlineListActivity extends AppCompatActivity {
 
     public RecyclerView recyclerView;
-    private RecyclerAdapter mAdapter;
+    private RecyclerAdapter recyclerAdapter;
     private List<Result> resultList;
-    private Button nextButton;
+    private LinearLayout nextButton;
+    private NestedScrollView scrollView;
+    private LinearLayoutManager linearLayoutManager;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teste);
+        setContentView(R.layout.headlines_activity);
 
         final String search_query = getIntent().getStringExtra("QUERY");
         int page_number = getIntent().getIntExtra("PAGE", 1);
         final int next_page = page_number++;
 
+
         recyclerView = findViewById(R.id.recyclerView);
+        nextButton = findViewById(R.id.next);
         resultList = new ArrayList<>();
-        nextButton = findViewById(R.id.next_page_button);
+        scrollView = findViewById(R.id.scrollView);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+        linearLayoutManager = new LinearLayoutManager(HeadlineListActivity.this);
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
               getNews(search_query, String.valueOf(next_page));
+              scrollView.setScrollY(0);
 
             }
         });
@@ -56,13 +70,18 @@ public class HeadlineListActivity extends AppCompatActivity {
     }
 
     public void setupRecyclerView(List<Result> resultList){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerAdapter(resultList, HeadlineListActivity.this);
-        recyclerView.setAdapter(mAdapter);
+        recyclerAdapter = new RecyclerAdapter(resultList, HeadlineListActivity.this);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(recyclerAdapter);
+
     }
 
     public void getNews(String query, String page_number){
+
+        progressBar.setVisibility(View.VISIBLE);
 
         Call<News> call2 = ApiClient.getInstance().getApi().getNews(query, page_number, API_KEY);
         call2.enqueue(new Callback<News>() {
@@ -77,6 +96,7 @@ public class HeadlineListActivity extends AppCompatActivity {
                     return;
                 }
                 list_news = response.body().getResponse().getResults();
+                progressBar.setVisibility(View.GONE);
                 setupRecyclerView(list_news);
 
 //

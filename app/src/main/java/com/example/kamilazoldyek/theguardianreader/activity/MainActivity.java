@@ -5,12 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.ALL_NEWS;
-import static com.example.kamilazoldyek.theguardianreader.constants.Constants.WORLD_NEWS;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.ALL_NEWS;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.WORLD_NEWS;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.model.Result;
@@ -41,11 +43,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         final Result result = resultList.get(position);
 
-        // TODO: 26/04/19 show headline and date 
-        // TODO: 26/04/19 review the card_item xml and update it 
-        //headlineTV = String.valueOf(result.getWebTitle());
-
-
+        holder.headlineTV.setText(String.valueOf(result.getWebTitle()));
+        holder.dateTV.setText(String.valueOf(result.getWebPublicationDate()));
     }
 
     @Override
@@ -60,18 +59,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public LinearLayout card_item;
         public TextView headlineTV;
         public TextView dateTV;
-
-
+        public ProgressBar progressBar;
 
 
         public RecyclerAdapterViewHolder(View v) {
             super(v);
 
-            // TODO: 26/04/19 findviewbyID & setOnclicklistener
+            headlineTV = v.findViewById(R.id.headline_text);
+            dateTV = v.findViewById(R.id.dateTime);
+            v.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
+            Toast.makeText(mContext, "click", Toast.LENGTH_LONG).show();
 
             // TODO: 26/04/19 open webview 
 
