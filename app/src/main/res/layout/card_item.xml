@@ -6,6 +6,8 @@
     android:layout_height="match_parent">
 
 
+
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,33 +15,79 @@
         android:layout_marginEnd="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        app:cardElevation="@dimen/cardview_default_elevation"/>
+        app:cardElevation="@dimen/cardview_default_elevation">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_marginTop="70dp"
-            style="@android:style/Widget.ProgressBar.Small"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/layoutDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
-            android:background="@color/white"
-            android:padding="5dp"></FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/rectangle" />
+
+                <LinearLayout
+                    android:id="@+id/headline_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/headline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="serif"
+                        android:text="Headline"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/headline_text_size"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/date_layout"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:background="#00726D6D"
+                            app:srcCompat="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:id="@+id/dateTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/gray"
+                            android:text="2019-04-01" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/transparent_rectangle" />
+
+
+    </android.support.v7.widget.CardView>
+
 </FrameLayout>
