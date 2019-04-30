@@ -1,17 +1,21 @@
 package com.example.kamilazoldyek.theguardianreader.activity;
 
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.adapter.RecyclerAdapter;
@@ -27,9 +31,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.API_KEY;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.SWIPE_DISTANCE;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.SWIPE_VELOCITY;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.TEST_TAG;
 
-public class HeadlineListActivity extends AppCompatActivity {
+public class HeadlineListActivity extends AppCompatActivity{
 
     public RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
@@ -42,6 +48,7 @@ public class HeadlineListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private LocalData localData;
     private LinearLayout nav_layout;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,22 +82,16 @@ public class HeadlineListActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         nav_layout.setVisibility(View.GONE);
 
-        if (localData.getCurrentPage() == 1) {
-            previousImageView.setVisibility(View.GONE);
-            pageTV.setText("Page " + page_number);
-        }else{
-            previousImageView.setVisibility(View.VISIBLE);
-        }
-
 
         nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int next = localData.getCurrentPage() + 1;
                 getNews(search_query, String.valueOf(next));
-                pageTV.setText("Page " + next);
+                pageTV.setText("" + next);
                 localData.setCurrentPage(next);
-                previousImageView.setVisibility(View.VISIBLE);
+                previousImageView.setAlpha(255);
+                previousImageView.setEnabled(true);
                 scrollView.setScrollY(0);
 
             }
@@ -102,22 +103,44 @@ public class HeadlineListActivity extends AppCompatActivity {
                 int prev = localData.getCurrentPage() - 1;
                 if (prev <= 1) {
                     getNews(search_query, "1");
-                    pageTV.setText("Page " + 1);
+                    pageTV.setText("1");
                     localData.setCurrentPage(1);
                     scrollView.setScrollY(0);
-                    previousImageView.setVisibility(View.GONE);
+                    previousImageView.setAlpha(50);
+                    previousImageView.setEnabled(false);
                 } else {
                     getNews(search_query, String.valueOf(prev));
-                    pageTV.setText("Page " + prev);
+                    pageTV.setText("" + prev);
                     localData.setCurrentPage(prev);
+                    previousImageView.setAlpha(255);
+                    previousImageView.setEnabled(true);
                     scrollView.setScrollY(0);
                 }
 
             }
         });
 
+        if (localData.getCurrentPage() == 1) {
+            previousImageView.setAlpha(50);
+            previousImageView.setEnabled(false);
+            pageTV.setText("" + page_number);
+        } else {
+            previousImageView.setAlpha(255);
+            previousImageView.setEnabled(true);
+        }
+
+        final SwipeRefreshLayout swipeDown = findViewById(R.id.swipeLayout);
+        swipeDown.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                int page = localData.getCurrentPage();
+                getNews(search_query, String.valueOf(page));
+                swipeDown.setRefreshing(false);
+            }
+        });
 
         getNews(search_query, String.valueOf(page_number));
+
     }
 
     public void setupRecyclerView(List<Result> resultList) {

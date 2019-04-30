@@ -2,6 +2,7 @@ package com.example.kamilazoldyek.theguardianreader.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.model.Result;
+import com.example.kamilazoldyek.theguardianreader.util.Utils;
 
 import java.util.List;
 
@@ -44,10 +46,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         final Result result = resultList.get(position);
 
+        holder.formattedDate = Utils.DateFormat(String.valueOf(result.getWebPublicationDate()));
         holder.cardItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition));
 
         holder.headlineTV.setText(String.valueOf(result.getWebTitle()));
-        holder.dateTV.setText(String.valueOf(result.getWebPublicationDate()));
+        holder.dateTV.setText(holder.formattedDate);
     }
 
     @Override
@@ -59,9 +62,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public class RecyclerAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public LinearLayout cardItem;
+        public CardView cardItem;
         public TextView headlineTV;
         public TextView dateTV;
+        public String formattedDate;
         public ProgressBar progressBar;
 
 
@@ -70,7 +74,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
             headlineTV = v.findViewById(R.id.headline_text);
             dateTV = v.findViewById(R.id.dateTime);
-            cardItem = v.findViewById(R.id.card_item);
+            cardItem = v.findViewById(R.id.cardView);
             v.setOnClickListener(this);
 
         }

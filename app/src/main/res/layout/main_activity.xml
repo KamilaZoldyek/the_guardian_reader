@@ -30,118 +30,219 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/gradient" />
 
-    <TableLayout
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:padding="10dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/background_gradient"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_title">
 
-        <TableRow
-            android:id="@+id/row_1"
+        <ImageView
+            android:id="@+id/arrowLeftIV"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:tint="#4DFFFFFF"
+            app:srcCompat="@drawable/ic_previous" />
+
+        <TableLayout
+            android:id="@+id/table1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:padding="10dp">
+
+            <TableRow
+                android:id="@+id/row_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/button_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonHeight"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_all"
+                    android:fontFamily="sans-serif-light"
+                    android:onClick="query_sender"
+                    android:text="All"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+
+
+                <Button
+                    android:id="@+id/button_world"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonHeight"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_world"
+                    android:fontFamily="sans-serif-light"
+                    android:onClick="query_sender"
+                    android:text="World"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/row_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <Button
+                    android:id="@+id/button_uk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonHeight"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_uk"
+                    android:drawableTint="@color/white"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:onClick="query_sender"
+                    android:text="UK"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+
+
+                <Button
+                    android:id="@+id/button_technology"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonHeight"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:drawableTop="@drawable/ic_tech"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size"
+                    android:gravity="center"
+                    android:onClick="query_sender"
+                    android:text="tech"
+                   />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/table2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <TableRow
+            android:id="@+id/row_1_table_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="10dp">
 
-            <Button
-                android:id="@+id/button_all"
-                android:layout_width="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button"
-                android:onClick="query_sender"
-                android:text="All"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size" />
+                <Button
+                    android:id="@+id/button_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonHeight"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:drawableTop="@drawable/ic_search"
+                    android:onClick="query_sender"
+                    android:text="search"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
 
 
-            <Button
-                android:id="@+id/button_world"
-                android:layout_width="wrap_content"
-                android:layout_height="52dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button"
-                android:onClick="query_sender"
-                android:text="World"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size" />
-
-
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/row_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="10dp">
-
-            <Button
-                android:id="@+id/button_uk"
-                android:layout_width="wrap_content"
-                android:layout_height="52dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button"
-                android:gravity="center"
-                android:onClick="query_sender"
-                android:text="UK"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size" />
-
-
-            <Button
-                android:id="@+id/button_technology"
-                android:layout_width="wrap_content"
-                android:layout_height="52dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/button"
-                android:gravity="center"
-                android:onClick="query_sender"
-                android:text="tech"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size" />
 
             <!--<Button-->
-            <!--android:id="@+id/button_Society"-->
+            <!--android:id="@+id/button_pol"-->
             <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="52dp"-->
+            <!--android:layout_height="60dp"-->
             <!--android:layout_marginEnd="15dp"-->
-            <!--android:background="@drawable/button"-->
-            <!--android:gravity="center"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:drawableTop="@drawable/ic_politics"-->
             <!--android:onClick="query_sender"-->
-            <!--android:text="society"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="@dimen/button_text_size" />-->
-
-            <!--<Button-->
-            <!--android:id="@+id/button_politics"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="52dp"-->
-            <!--android:layout_marginEnd="15dp"-->
-            <!--android:background="@drawable/button"-->
-            <!--android:gravity="center"-->
-            <!--android:onClick="query_sender"-->
-            <!--android:text="politics"-->
+            <!--android:text="Polictics"-->
             <!--android:textColor="@color/white"-->
             <!--android:textSize="@dimen/button_text_size" />-->
 
 
-        </TableRow>
+            <!--<Button-->
+            <!--android:id="@+id/button_bus"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="52dp"-->
+            <!--android:layout_marginEnd="15dp"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:drawableTop="@drawable/ic_busisness"-->
+            <!--android:onClick="query_sender"-->
+            <!--android:text="Busisness"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/button_text_size" />-->
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+            <TableRow
+                android:id="@+id/row_2_table_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp">
+
+
+                <Button
+                    android:id="@+id/button_about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/buttonHeight"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/transparent"
+                    android:fontFamily="sans-serif-light"
+                    android:drawableTop="@drawable/ic_about"
+                    android:onClick="query_sender"
+                    android:text="About"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
+            </TableRow>
+
+
+
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/arrowRightIV"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:tint="#4DFFFFFF"
+            app:srcCompat="@drawable/ic_next" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/app_title"
@@ -178,5 +279,7 @@
             android:textColor="@color/white"
             android:textSize="15dp" />
     </LinearLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

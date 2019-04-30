@@ -10,6 +10,8 @@ public class Constants {
     public static final String WORLD_NEWS = "search?section=world";
     public static final String UK_NEWS = "search?section=uk-news";
     public static final String TECH = "search?section=technology";
+    public static final int SWIPE_DISTANCE = 100;
+    public static final int SWIPE_VELOCITY = 100;
 
 
 }
