@@ -8,6 +8,8 @@ public class Constants {
 
     public static final String ALL_NEWS = "search?";
     public static final String WORLD_NEWS = "search?section=world";
+    public static final String UK_NEWS = "search?section=uk-news";
+    public static final String TECH = "search?section=technology";
 
 
 }

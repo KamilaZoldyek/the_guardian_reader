@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class HeadlineListActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
     private LocalData localData;
+    private LinearLayout nav_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,12 @@ public class HeadlineListActivity extends AppCompatActivity {
         setContentView(R.layout.headlines_activity);
 
         final String search_query = getIntent().getStringExtra("QUERY");
+        final String section = getIntent().getStringExtra("SECTION");
+
         final int page_number = getIntent().getIntExtra("PAGE", 1);
+
+        getSupportActionBar().setTitle(section + " news");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -57,6 +64,7 @@ public class HeadlineListActivity extends AppCompatActivity {
         previousImageView = findViewById(R.id.previous_imageView);
         progressBar = findViewById(R.id.progressBar);
         pageTV = findViewById(R.id.pageTV);
+        nav_layout = findViewById(R.id.nav_layout);
 
         localData = new LocalData(HeadlineListActivity.this);
         localData.setCurrentPage(page_number);
@@ -65,6 +73,7 @@ public class HeadlineListActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(HeadlineListActivity.this);
 
         progressBar.setVisibility(View.GONE);
+        nav_layout.setVisibility(View.GONE);
 
         if (localData.getCurrentPage() == 1) {
             previousImageView.setVisibility(View.GONE);
@@ -91,7 +100,7 @@ public class HeadlineListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int prev = localData.getCurrentPage() - 1;
-                if (prev < 1) {
+                if (prev <= 1) {
                     getNews(search_query, "1");
                     pageTV.setText("Page " + 1);
                     localData.setCurrentPage(1);
@@ -121,6 +130,12 @@ public class HeadlineListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     public void getNews(String searchQuery, String currentPage) {
 
         progressBar.setVisibility(View.VISIBLE);
@@ -140,17 +155,17 @@ public class HeadlineListActivity extends AppCompatActivity {
                 }
 
                 list_news = response.body().getResponse().getResults();
-                String page = response.body().response.currentPage.toString();
+//                String page = response.body().response.currentPage.toString();
                 progressBar.setVisibility(View.GONE);
-
-
-                for (Result news : list_news) {
-                    String content = "\n\n";
-                    content += "Page: " + page + "\n";
-                    content += "Title: " + news.getWebTitle() + "\n";
-                    content += "Section: " + news.getSectionName() + "\n";
-                    Log.i(TEST_TAG, content);
-                }
+                nav_layout.setVisibility(View.VISIBLE);
+//
+//                for (Result news : list_news) {
+//                    String content = "\n\n";
+//                    content += "Page: " + page + "\n";
+//                    content += "Title: " + news.getWebTitle() + "\n";
+//                    content += "Section: " + news.getSectionName() + "\n";
+//                    Log.i(TEST_TAG, content);
+//                }
 
                 setupRecyclerView(list_news);
             }

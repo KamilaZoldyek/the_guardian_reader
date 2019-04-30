@@ -43,6 +43,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         final Result result = resultList.get(position);
 
+
+
         holder.headlineTV.setText(String.valueOf(result.getWebTitle()));
         holder.dateTV.setText(String.valueOf(result.getWebPublicationDate()));
     }
