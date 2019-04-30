@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Button worldNews_button;
     private Button uk_button;
     private Button tech_button;
+    private LinearLayout app_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         worldNews_button = findViewById(R.id.button_world);
         uk_button = findViewById(R.id.button_uk);
         tech_button = findViewById(R.id.button_technology);
+        app_title = findViewById(R.id.app_title);
+
+        app_title.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_transition));
 
 
         all_button.setOnClickListener(new View.OnClickListener() {
@@ -61,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        app_title.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_transition));
 
+    }
 }

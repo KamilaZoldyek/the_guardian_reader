@@ -20,12 +20,14 @@
         app:cardMaxElevation="5dp">
 
         <LinearLayout
+            android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
 
             <LinearLayout
+                android:id="@+id/card_item"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -40,9 +42,9 @@
                     android:id="@+id/headline_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:paddingVertical="10dp"
-                    android:paddingEnd="5dp"
-                    android:orientation="vertical">
+                    android:paddingEnd="5dp">
 
                     <TextView
                         android:id="@+id/headline_text"

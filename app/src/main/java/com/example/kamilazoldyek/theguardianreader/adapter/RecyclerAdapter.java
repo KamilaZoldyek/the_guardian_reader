@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,8 +20,8 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerAdapterViewHolder> {
 
     private List<Result> resultList;
-    String headline, date;
-    Context mContext;
+
+    private Context mContext;
 
     public RecyclerAdapter(List<Result> resultList, Context mContext) {
         this.resultList = resultList;
@@ -43,7 +44,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         final Result result = resultList.get(position);
 
-
+        holder.cardItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition));
 
         holder.headlineTV.setText(String.valueOf(result.getWebTitle()));
         holder.dateTV.setText(String.valueOf(result.getWebPublicationDate()));
@@ -58,7 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public class RecyclerAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public LinearLayout card_item;
+        public LinearLayout cardItem;
         public TextView headlineTV;
         public TextView dateTV;
         public ProgressBar progressBar;
@@ -69,6 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
             headlineTV = v.findViewById(R.id.headline_text);
             dateTV = v.findViewById(R.id.dateTime);
+            cardItem = v.findViewById(R.id.card_item);
             v.setOnClickListener(this);
 
         }
