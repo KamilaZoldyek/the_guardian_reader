@@ -11,7 +11,7 @@ public class LocalData {
     private SharedPreferences.Editor prefsEditor;
 
     private String currentPage = "page";
-
+    private String currentKey = "key";
 
 
     public LocalData(Context context) {
@@ -27,6 +27,12 @@ public class LocalData {
         prefsEditor.commit();
     }
 
+    public String getCurrentKey() {
+        return appSharedPrefs.getString(currentKey, "*");
+    }
 
-
+    public void setCurrentKey(String key) {
+        prefsEditor.putString(currentKey, key);
+        prefsEditor.commit();
+    }
 }

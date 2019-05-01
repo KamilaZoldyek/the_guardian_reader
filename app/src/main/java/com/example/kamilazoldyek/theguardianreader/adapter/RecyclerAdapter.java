@@ -8,14 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.model.Result;
-import com.example.kamilazoldyek.theguardianreader.util.Utils;
+import com.example.kamilazoldyek.theguardianreader.util.DateFormat;
 
 import java.util.List;
 
@@ -45,11 +44,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public void onBindViewHolder(@NonNull RecyclerAdapter.RecyclerAdapterViewHolder holder, int position) {
 
         final Result result = resultList.get(position);
+        String section = result.getSectionName();
 
-        holder.formattedDate = Utils.DateFormat(String.valueOf(result.getWebPublicationDate()));
+        holder.formattedDate = DateFormat.DateFormat(String.valueOf(result.getWebPublicationDate()));
         holder.cardItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition));
 
         holder.headlineTV.setText(String.valueOf(result.getWebTitle()));
+        holder.sectionTV.setText(section);
         holder.dateTV.setText(holder.formattedDate);
     }
 
@@ -66,6 +67,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public TextView headlineTV;
         public TextView dateTV;
         public String formattedDate;
+        public TextView sectionTV;
         public ProgressBar progressBar;
 
 
@@ -75,6 +77,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             headlineTV = v.findViewById(R.id.headline_text);
             dateTV = v.findViewById(R.id.dateTime);
             cardItem = v.findViewById(R.id.cardView);
+            sectionTV = v.findViewById(R.id.sectionTV);
             v.setOnClickListener(this);
 
         }

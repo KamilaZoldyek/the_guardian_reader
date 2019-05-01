@@ -29,13 +29,15 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.ALL_NEWS;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.API_KEY;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.SWIPE_DISTANCE;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.SWIPE_VELOCITY;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.TEST_TAG;
 
-public class HeadlineListActivity extends AppCompatActivity{
+public class HeadlineListActivity extends AppCompatActivity {
 
     public RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
@@ -48,7 +50,6 @@ public class HeadlineListActivity extends AppCompatActivity{
     private ProgressBar progressBar;
     private LocalData localData;
     private LinearLayout nav_layout;
-    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +57,10 @@ public class HeadlineListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.headlines_activity);
 
-        final String search_query = getIntent().getStringExtra("QUERY");
-        final String section = getIntent().getStringExtra("SECTION");
-
+        final String section_query = getIntent().getStringExtra("QUERY");
+        final String search_keyword = getIntent().getStringExtra("KEYWORD");
+        final String section_name = getIntent().getStringExtra("SECTION");
         final int page_number = getIntent().getIntExtra("PAGE", 1);
-
-        getSupportActionBar().setTitle(section + " news");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         recyclerView = findViewById(R.id.recyclerView);
         nextImageView = findViewById(R.id.next_imageView);
@@ -75,6 +72,8 @@ public class HeadlineListActivity extends AppCompatActivity{
 
         localData = new LocalData(HeadlineListActivity.this);
         localData.setCurrentPage(page_number);
+        localData.setCurrentKey("*");
+        localData.setCurrentKey(search_keyword);
 
         resultList = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(HeadlineListActivity.this);
@@ -87,7 +86,11 @@ public class HeadlineListActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 int next = localData.getCurrentPage() + 1;
-                getNews(search_query, String.valueOf(next));
+                if (localData.getCurrentKey().equals("*")) {
+                    getNews(section_query, String.valueOf(next));
+                } else {
+                    getSearchResult(localData.getCurrentKey(), section_query, String.valueOf(next));
+                }
                 pageTV.setText("" + next);
                 localData.setCurrentPage(next);
                 previousImageView.setAlpha(255);
@@ -102,14 +105,18 @@ public class HeadlineListActivity extends AppCompatActivity{
             public void onClick(View view) {
                 int prev = localData.getCurrentPage() - 1;
                 if (prev <= 1) {
-                    getNews(search_query, "1");
+                    if (localData.getCurrentKey().equals("*")) {
+                        getNews(section_query, "1");
+                    } else {
+                        getSearchResult(localData.getCurrentKey(), section_query, "1");
+                    }
                     pageTV.setText("1");
                     localData.setCurrentPage(1);
                     scrollView.setScrollY(0);
                     previousImageView.setAlpha(50);
                     previousImageView.setEnabled(false);
                 } else {
-                    getNews(search_query, String.valueOf(prev));
+                    getNews(section_query, String.valueOf(prev));
                     pageTV.setText("" + prev);
                     localData.setCurrentPage(prev);
                     previousImageView.setAlpha(255);
@@ -134,18 +141,29 @@ public class HeadlineListActivity extends AppCompatActivity{
             @Override
             public void onRefresh() {
                 int page = localData.getCurrentPage();
-                getNews(search_query, String.valueOf(page));
+                String keyword = localData.getCurrentKey();
+
+                if (keyword.equals("*")) {
+                    getNews(section_query, String.valueOf(page));
+                } else {
+                    getSearchResult(keyword, section_query, String.valueOf(page));
+                }
                 swipeDown.setRefreshing(false);
             }
         });
 
-        getNews(search_query, String.valueOf(page_number));
-
+        if (search_keyword.equals("*")) {
+            getSupportActionBar().setTitle(section_name + " news");
+            getNews(section_query, String.valueOf(page_number));
+        } else {
+            getSupportActionBar().setTitle("Results for: " + search_keyword);
+            getSearchResult(search_keyword, section_query, String.valueOf(page_number));
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void setupRecyclerView(List<Result> resultList) {
         recyclerAdapter = new RecyclerAdapter(resultList, HeadlineListActivity.this);
-
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
@@ -159,12 +177,16 @@ public class HeadlineListActivity extends AppCompatActivity{
         return true;
     }
 
-    public void getNews(String searchQuery, String currentPage) {
+    public void getNews(String sectionQuery, String currentPage) {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<News> call2 = ApiClient.getInstance().getApi().getNews(searchQuery, currentPage, API_KEY);
+        Call<News> call2 = ApiClient
+                .getInstance()
+                .getApi()
+                .getNews(sectionQuery, currentPage, API_KEY);
         call2.enqueue(new Callback<News>() {
+
             List<Result> list_news = new ArrayList<>();
 
             @Override
@@ -173,12 +195,12 @@ public class HeadlineListActivity extends AppCompatActivity{
                     Log.i(TEST_TAG, "Code: " + response.code());
                     if (response.code() == 401) {
                         Log.i(TEST_TAG, "Code 401: Unauthorized \n\n");
+                        // TODO: 01/05/19 add unauthrized warning image
                     }
+                    // TODO: 01/05/19 add error image
                     return;
                 }
-
                 list_news = response.body().getResponse().getResults();
-//                String page = response.body().response.currentPage.toString();
                 progressBar.setVisibility(View.GONE);
                 nav_layout.setVisibility(View.VISIBLE);
 //
@@ -189,13 +211,13 @@ public class HeadlineListActivity extends AppCompatActivity{
 //                    content += "Section: " + news.getSectionName() + "\n";
 //                    Log.i(TEST_TAG, content);
 //                }
-
                 setupRecyclerView(list_news);
             }
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
                 Log.i(TEST_TAG, t.getMessage());
+                // TODO: 01/05/19 add error image
 
             }
         });
@@ -203,5 +225,42 @@ public class HeadlineListActivity extends AppCompatActivity{
 
     }
 
+    public void getSearchResult(String searchKeyword, String sectionQuery, String currentPage) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+
+        Call<News> call = ApiClient
+                .getInstance()
+                .getApi()
+                .getSearchResult(sectionQuery, searchKeyword, currentPage, API_KEY);
+
+        call.enqueue(new Callback<News>() {
+            List<Result> resultList = new ArrayList<>();
+
+            @Override
+            public void onResponse(Call<News> call, Response<News> response) {
+                if (!response.isSuccessful()) {
+                    Log.i(TEST_TAG, "Code: " + response.code());
+                    if (response.code() == 401) {
+                        Log.i(TEST_TAG, "Code 401: Unauthorized \n\n");
+                        // TODO: 01/05/19 add unauthrized warning image
+                    }
+                    // TODO: 01/05/19 add error image
+                    return;
+                }
+                resultList = response.body().getResponse().getResults();
+                progressBar.setVisibility(View.GONE);
+                nav_layout.setVisibility(View.VISIBLE);
+                setupRecyclerView(resultList);
+            }
+
+            @Override
+            public void onFailure(Call<News> call, Throwable t) {
+                Log.i(TEST_TAG, t.getMessage());
+                // TODO: 01/05/19 add error image
+            }
+        });
+    }
 
 }

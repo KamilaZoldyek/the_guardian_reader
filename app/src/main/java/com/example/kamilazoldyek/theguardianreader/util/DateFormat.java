@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class Utils {
+public class DateFormat {
 
     public static String DateFormat(String date){
 
@@ -22,7 +22,7 @@ public class Utils {
             e.printStackTrace();
         }
 
-        format = new SimpleDateFormat("EEEE, MMMM dd, yyyy 'at' HH:mm", Locale.UK);
+        format = new SimpleDateFormat("EEE • MMM dd, yyyy 'at' HH:mm", Locale.UK);
         String formatedDate = format.format(newDate);
 
         return formatedDate;

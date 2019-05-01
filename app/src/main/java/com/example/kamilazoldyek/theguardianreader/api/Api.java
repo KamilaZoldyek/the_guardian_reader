@@ -15,4 +15,12 @@ public interface Api {
             @Query("page") String page,
             @Query("api-key") String apiKey
     );
+
+    @GET
+    Call<News> getSearchResult(
+            @Url String url,
+            @Query ("q") String keyword,
+            @Query("page") String page,
+            @Query("api-key") String apiKey
+    );
 }

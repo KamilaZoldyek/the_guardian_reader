@@ -59,9 +59,34 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:id="@+id/label_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/label"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:tint="@color/gray"
+                            app:srcCompat="@drawable/ic_label" />
+
+                        <TextView
+                            android:id="@+id/sectionTV"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:gravity="center_vertical"
+                            android:text="2019-04-01"
+                            android:textColor="@color/gray"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:id="@+id/date_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal">
@@ -70,7 +95,7 @@
                             android:id="@+id/imageView3"
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
-                            android:background="#00726D6D"
+                            android:tint="@color/gray"
                             app:srcCompat="@drawable/ic_calendar" />
 
                         <TextView
@@ -83,6 +108,7 @@
                             android:textColor="@color/gray"
                             android:textSize="15dp" />
                     </LinearLayout>
+
 
                 </LinearLayout>
 

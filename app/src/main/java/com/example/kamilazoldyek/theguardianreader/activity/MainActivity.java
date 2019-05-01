@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView arrowRight;
     private TableLayout table1;
     private TableLayout table2;
+    private EditText searchET;
+    private ImageView searchIV;
+    private String searchKeyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         arrowRight = findViewById(R.id.arrowRightIV);
         table1 = findViewById(R.id.table1);
         table2 = findViewById(R.id.table2);
+        searchET = findViewById(R.id.search_here);
+        searchIV = findViewById(R.id.searchIV);
+
 
         app_title.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_transition));
         arrowRight.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_right));
@@ -53,26 +60,34 @@ public class MainActivity extends AppCompatActivity {
         all_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query_sender(ALL_NEWS, "All");
+                query_sender("*",ALL_NEWS, "All");
             }
         });
         uk_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query_sender(UK_NEWS, "United Kingdom");
+                query_sender("*",UK_NEWS, "United Kingdom");
             }
         });
         tech_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query_sender(TECH, "Technology");
+                query_sender("*",TECH, "Technology");
             }
         });
         worldNews_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                query_sender(WORLD_NEWS, "World");
+                query_sender("*",WORLD_NEWS, "World");
             }
         });
+        searchIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchKeyword = searchET.getText().toString();
+                query_sender(searchKeyword, ALL_NEWS,"");
+            }
+        });
+
         arrowRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,8 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void query_sender(String query, String section) {
+    public void query_sender(String keyword, String query, String section) {
         Intent intent = new Intent(MainActivity.this, HeadlineListActivity.class);
+        intent.putExtra("KEYWORD", keyword);
         intent.putExtra("QUERY", query);
         intent.putExtra("SECTION", section);
         intent.putExtra("PAGE", 1);
@@ -121,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         app_title.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_transition));
+        arrowRight.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_right));
+        arrowLeft.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_left));
+        table2.setVisibility(View.GONE);
+        searchET.setText("");
 
     }
 }
