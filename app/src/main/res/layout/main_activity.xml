@@ -286,6 +286,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingHorizontal="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="@+id/background_gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -299,11 +301,8 @@
             android:layout_weight="3"
             android:backgroundTint="@color/gray"
             android:ems="10"
-            android:ellipsize="end"
-            android:focusableInTouchMode="true"
             android:hint="Search news"
             android:inputType="text"
-            android:text="brexit"
             android:textColor="@color/white"
             android:textColorHint="@color/gray" />
 

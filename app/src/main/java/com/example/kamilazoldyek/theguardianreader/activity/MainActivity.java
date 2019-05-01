@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Button uk_button;
     private Button tech_button;
     private LinearLayout app_title;
+    private LinearLayout searchLayout;
     private ImageView arrowLeft;
     private ImageView arrowRight;
     private TableLayout table1;
@@ -49,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
         table2 = findViewById(R.id.table2);
         searchET = findViewById(R.id.search_here);
         searchIV = findViewById(R.id.searchIV);
+        searchLayout = findViewById(R.id.search_layout);
 
 
+        searchLayout.requestFocus();
         app_title.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_transition));
         arrowRight.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_right));
         arrowLeft.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_left));
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         arrowRight.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_right));
         arrowLeft.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_left));
         table2.setVisibility(View.GONE);
+        searchLayout.requestFocus();
         searchET.setText("");
 
     }
