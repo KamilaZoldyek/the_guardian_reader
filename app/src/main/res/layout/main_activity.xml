@@ -169,7 +169,6 @@
                     android:background="@color/transparent"
                     android:drawableTop="@drawable/ic_about"
                     android:fontFamily="sans-serif-light"
-                    android:onClick="query_sender"
                     android:text="About"
                     android:textColor="@color/white"
                     android:textSize="@dimen/button_text_size" />

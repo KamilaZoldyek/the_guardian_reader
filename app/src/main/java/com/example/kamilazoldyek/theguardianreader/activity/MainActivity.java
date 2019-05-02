@@ -20,16 +20,10 @@ import static com.example.kamilazoldyek.theguardianreader.util.Constants.WORLD_N
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button all_button;
-    private Button worldNews_button;
-    private Button uk_button;
-    private Button tech_button;
-    private LinearLayout app_title;
-    private LinearLayout searchLayout;
-    private ImageView arrowLeft;
-    private ImageView arrowRight;
-    private TableLayout table1;
-    private TableLayout table2;
+    private Button all_button, worldNews_button, uk_button, tech_button, aboutButton;
+    private LinearLayout app_title, searchLayout;
+    private ImageView arrowLeft, arrowRight;
+    private TableLayout table1, table2;
     private EditText searchET;
     private ImageView searchIV;
     private String searchKeyword;
@@ -51,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         searchET = findViewById(R.id.search_here);
         searchIV = findViewById(R.id.searchIV);
         searchLayout = findViewById(R.id.search_layout);
+        aboutButton = findViewById(R.id.button_about);
 
 
         searchLayout.requestFocus();
@@ -60,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         table2.setVisibility(View.GONE);
 
 
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
         all_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
