@@ -1,16 +1,16 @@
 package com.example.kamilazoldyek.theguardianreader.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.model.Result;
@@ -68,7 +68,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         public TextView dateTV;
         public String formattedDate;
         public TextView sectionTV;
-        public ProgressBar progressBar;
 
 
         public RecyclerAdapterViewHolder(View v) {
@@ -84,9 +83,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(mContext, "click", Toast.LENGTH_LONG).show();
 
-            // TODO: 26/04/19 open webview 
+            String weburl = resultList.get(getAdapterPosition()).getWebUrl();
+            int color = mContext.getResources().getColor(R.color.colorPrimaryDark);
+
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+
+            builder.setStartAnimations(mContext, R.anim.fade_in_left, R.anim.fade_out_left);
+            builder.setExitAnimations(mContext, R.anim.fade_in_right, R.anim.fade_out_right);
+            builder.setToolbarColor(color);
+            builder.setShowTitle(true);
+
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(mContext, Uri.parse(weburl));
+
+//
 
         }
     }
