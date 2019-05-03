@@ -1,6 +1,7 @@
 # The Guardian news reader
 
 > Versão em PT-BR abaixo
+
 > Android version supported: 6.0 (Marshmallow) and above
 
  This app was made for study proposes. It was a personal training for me, specially about consuming API's and showing content. I mixed what I already knew about Android development with some tutorials and readings. I hope this app is somewhat useful or inspiring for you, and any feedback is appreciated.
@@ -43,6 +44,7 @@
 # Leitor de notícias do The Guardian
 
 > Versão do Android mínima: 6.0 (Marshmallow) ou acima
+
 > A linguagem do app é inglês, assim como o conteúdo do jornal The Guardian.
 
  Esse é um app feito apenas para estudo. Foi um treinamento principalmente sobre consumo de API, e mostrar seu conteúdo.
