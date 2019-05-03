@@ -9,7 +9,6 @@ public class LocalData {
 
     private SharedPreferences appSharedPrefs;
     private SharedPreferences.Editor prefsEditor;
-
     private String currentPage = "page";
     private String currentKey = "key";
 
@@ -19,10 +18,11 @@ public class LocalData {
         this.prefsEditor = appSharedPrefs.edit();
     }
 
-    public int getCurrentPage(){
+    public int getCurrentPage() {
         return appSharedPrefs.getInt(currentPage, 1);
     }
-    public void setCurrentPage(int page){
+
+    public void setCurrentPage(int page) {
         prefsEditor.putInt(currentPage, page);
         prefsEditor.commit();
     }

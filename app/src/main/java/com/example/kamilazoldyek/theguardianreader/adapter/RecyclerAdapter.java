@@ -21,7 +21,6 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerAdapterViewHolder> {
 
     private List<Result> resultList;
-
     private Context mContext;
 
     public RecyclerAdapter(List<Result> resultList, Context mContext) {
@@ -32,11 +31,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @NonNull
     @Override
     public RecyclerAdapter.RecyclerAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
         View v;
         v = LayoutInflater.from(mContext).inflate(R.layout.card_item, viewGroup, false);
         final RecyclerAdapter.RecyclerAdapterViewHolder vHolder = new RecyclerAdapterViewHolder(v);
-
         return vHolder;
     }
 
@@ -48,7 +45,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         holder.formattedDate = DateFormat.DateFormat(String.valueOf(result.getWebPublicationDate()));
         holder.cardItem.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_transition));
-
         holder.headlineTV.setText(String.valueOf(result.getWebTitle()));
         holder.sectionTV.setText(section);
         holder.dateTV.setText(holder.formattedDate);
@@ -58,7 +54,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public int getItemCount() {
         return resultList.size();
     }
-
 
 
     public class RecyclerAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,13 +67,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         public RecyclerAdapterViewHolder(View v) {
             super(v);
-
             headlineTV = v.findViewById(R.id.headline_text);
             dateTV = v.findViewById(R.id.dateTime);
             cardItem = v.findViewById(R.id.cardView);
             sectionTV = v.findViewById(R.id.sectionTV);
             v.setOnClickListener(this);
-
         }
 
         @Override
@@ -96,9 +89,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
             CustomTabsIntent customTabsIntent = builder.build();
             customTabsIntent.launchUrl(mContext, Uri.parse(weburl));
-
-//
-
         }
     }
 }

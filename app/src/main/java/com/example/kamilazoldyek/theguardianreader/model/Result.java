@@ -8,7 +8,6 @@ import java.io.Serializable;
 public class Result implements Serializable {
 
 
-
     @SerializedName("id")
     @Expose
     public String id;

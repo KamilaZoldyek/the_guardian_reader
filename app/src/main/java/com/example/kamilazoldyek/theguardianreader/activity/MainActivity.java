@@ -14,7 +14,7 @@ import android.widget.TableLayout;
 import com.example.kamilazoldyek.theguardianreader.R;
 
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.ALL_NEWS;
-import static com.example.kamilazoldyek.theguardianreader.util.Constants.TECH;
+import static com.example.kamilazoldyek.theguardianreader.util.Constants.TECH_NEWS;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.UK_NEWS;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.WORLD_NEWS;
 
@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
         searchLayout = findViewById(R.id.search_layout);
         aboutButton = findViewById(R.id.button_about);
 
-
         searchLayout.requestFocus();
+
         app_title.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_transition));
         arrowRight.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_right));
         arrowLeft.setAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.arrow_anim_left));
-        table2.setVisibility(View.GONE);
 
+        table2.setVisibility(View.GONE);
 
         aboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,31 +65,31 @@ public class MainActivity extends AppCompatActivity {
         all_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query_sender("*",ALL_NEWS, "All");
+                query_sender("*", ALL_NEWS, "All");
             }
         });
         uk_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query_sender("*",UK_NEWS, "United Kingdom");
+                query_sender("*", UK_NEWS, "United Kingdom");
             }
         });
         tech_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                query_sender("*",TECH, "Technology");
+                query_sender("*", TECH_NEWS, "Technology");
             }
         });
         worldNews_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                query_sender("*",WORLD_NEWS, "World");
+                query_sender("*", WORLD_NEWS, "World");
             }
         });
         searchIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 searchKeyword = searchET.getText().toString();
-                query_sender(searchKeyword, ALL_NEWS,"");
+                query_sender(searchKeyword, ALL_NEWS, "");
             }
         });
 

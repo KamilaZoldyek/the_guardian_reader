@@ -8,14 +8,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kamilazoldyek.theguardianreader.R;
 import com.example.kamilazoldyek.theguardianreader.adapter.RecyclerAdapter;
@@ -30,26 +27,21 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.kamilazoldyek.theguardianreader.util.Constants.ALL_NEWS;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.API_KEY;
-import static com.example.kamilazoldyek.theguardianreader.util.Constants.SWIPE_DISTANCE;
-import static com.example.kamilazoldyek.theguardianreader.util.Constants.SWIPE_VELOCITY;
 import static com.example.kamilazoldyek.theguardianreader.util.Constants.TEST_TAG;
 
 public class HeadlineListActivity extends AppCompatActivity {
 
-    public RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
     private List<Result> resultList;
-    private ImageView previousImageView;
-    private ImageView nextImageView;
+    private ImageView previousImageView, nextImageView;
     private TextView pageTV;
     private NestedScrollView scrollView;
     private LinearLayoutManager linearLayoutManager;
     private ProgressBar progressBar;
     private LocalData localData;
-    private LinearLayout nav_layout;
+    private LinearLayout nav_layout, errorLayout, notFoundLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +61,8 @@ public class HeadlineListActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         pageTV = findViewById(R.id.pageTV);
         nav_layout = findViewById(R.id.nav_layout);
+        errorLayout = findViewById(R.id.error);
+        notFoundLayout = findViewById(R.id.notfound);
 
         localData = new LocalData(HeadlineListActivity.this);
         localData.setCurrentPage(page_number);
@@ -78,9 +72,10 @@ public class HeadlineListActivity extends AppCompatActivity {
         resultList = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(HeadlineListActivity.this);
 
+        errorLayout.setVisibility(View.GONE);
+        notFoundLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         nav_layout.setVisibility(View.GONE);
-
 
         nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +163,6 @@ public class HeadlineListActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(recyclerAdapter);
-
     }
 
     @Override
@@ -195,40 +189,29 @@ public class HeadlineListActivity extends AppCompatActivity {
                     Log.i(TEST_TAG, "Code: " + response.code());
                     if (response.code() == 401) {
                         Log.i(TEST_TAG, "Code 401: Unauthorized \n\n");
-                        // TODO: 01/05/19 add unauthrized warning image
                     }
-                    // TODO: 01/05/19 add error image
+                    errorLayout.setVisibility(View.VISIBLE);
+                    nav_layout.setVisibility(View.GONE);
                     return;
                 }
                 list_news = response.body().getResponse().getResults();
                 progressBar.setVisibility(View.GONE);
                 nav_layout.setVisibility(View.VISIBLE);
-//
-//                for (Result news : list_news) {
-//                    String content = "\n\n";
-//                    content += "Page: " + page + "\n";
-//                    content += "Title: " + news.getWebTitle() + "\n";
-//                    content += "Section: " + news.getSectionName() + "\n";
-//                    Log.i(TEST_TAG, content);
-//                }
                 setupRecyclerView(list_news);
             }
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
                 Log.i(TEST_TAG, t.getMessage());
-                // TODO: 01/05/19 add error image
-
+                errorLayout.setVisibility(View.VISIBLE);
+                nav_layout.setVisibility(View.GONE);
             }
         });
-
-
     }
 
     public void getSearchResult(String searchKeyword, String sectionQuery, String currentPage) {
 
         progressBar.setVisibility(View.VISIBLE);
-
 
         Call<News> call = ApiClient
                 .getInstance()
@@ -244,23 +227,28 @@ public class HeadlineListActivity extends AppCompatActivity {
                     Log.i(TEST_TAG, "Code: " + response.code());
                     if (response.code() == 401) {
                         Log.i(TEST_TAG, "Code 401: Unauthorized \n\n");
-                        // TODO: 01/05/19 add unauthrized warning image
                     }
-                    // TODO: 01/05/19 add error image
+                    errorLayout.setVisibility(View.VISIBLE);
+                    nav_layout.setVisibility(View.GONE);
                     return;
                 }
                 resultList = response.body().getResponse().getResults();
-                progressBar.setVisibility(View.GONE);
-                nav_layout.setVisibility(View.VISIBLE);
-                setupRecyclerView(resultList);
+                if(resultList.isEmpty()){
+                    notFoundLayout.setVisibility(View.VISIBLE);
+                    nav_layout.setVisibility(View.GONE);
+                }else {
+                    progressBar.setVisibility(View.GONE);
+                    nav_layout.setVisibility(View.VISIBLE);
+                    setupRecyclerView(resultList);
+                }
             }
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
                 Log.i(TEST_TAG, t.getMessage());
-                // TODO: 01/05/19 add error image
+                errorLayout.setVisibility(View.VISIBLE);
+                nav_layout.setVisibility(View.GONE);
             }
         });
     }
-
 }

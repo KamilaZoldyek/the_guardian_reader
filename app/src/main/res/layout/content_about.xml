@@ -25,19 +25,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:fontFamily="serif"
-                android:textColor="@color/graphite"
                 android:paddingVertical="5dp"
                 android:text="• About the app "
+                android:textColor="@color/graphite"
                 android:textSize="@dimen/button_text_size"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:tint="@color/graphite"
-                app:srcCompat="@drawable/ic_dropdown" />
+
         </LinearLayout>
 
         <TextView
@@ -60,19 +54,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:fontFamily="serif"
-                android:textColor="@color/graphite"
                 android:paddingVertical="5dp"
                 android:text="• About the creator"
+                android:textColor="@color/graphite"
                 android:textSize="@dimen/button_text_size"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:tint="@color/graphite"
-                app:srcCompat="@drawable/ic_dropdown" />
+
         </LinearLayout>
 
         <TextView
@@ -81,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:fontFamily="sans-serif-light"
-            android:text="@string/about_app"
+            android:text="@string/about_author"
             android:textSize="@dimen/button_text_size" />
 
         <TableLayout
@@ -91,7 +79,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/linkedin"
@@ -120,6 +108,13 @@
                         android:fontFamily="sans-serif-light"
                         android:text="Linkedin" />
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:tint="@color/gray"
+                        app:srcCompat="@drawable/ic_next" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -147,13 +142,19 @@
                         android:fontFamily="sans-serif-light"
                         android:text="Github" />
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:tint="@color/gray"
+                        app:srcCompat="@drawable/ic_next" />
+
                 </LinearLayout>
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
 
             <LinearLayout
                 android:id="@+id/email"
@@ -179,6 +180,13 @@
                     android:fontFamily="sans-serif-light"
                     android:text="camila_c_araujo@outlook.com" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_next" />
+
             </LinearLayout>
 
         </TableLayout>
@@ -194,28 +202,137 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:fontFamily="serif"
+                android:text="• Icons designed by:"
                 android:textColor="@color/graphite"
-                android:text="• Resources"
                 android:textSize="@dimen/button_text_size"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:tint="@color/graphite"
-                app:srcCompat="@drawable/ic_dropdown" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/resourcesTV"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/resources"
-            android:textSize="@dimen/button_text_size" />
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="10dp"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_github" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Dave Gandy" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingEnd="10dp"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_linkedin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Freepik" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView237"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingEnd="10dp"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_news" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Picol" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingEnd="10dp"
+                    android:tint="@color/gray"
+                    app:srcCompat="@drawable/ic_uk" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Freepik" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/resourcesTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:fontFamily="sans-serif-light"
+                android:text="Those are from Flaticon. Others are from Android Asset Library."
+                android:textSize="@dimen/button_text_size" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

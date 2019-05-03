@@ -19,7 +19,7 @@ public interface Api {
     @GET
     Call<News> getSearchResult(
             @Url String url,
-            @Query ("q") String keyword,
+            @Query("q") String keyword,
             @Query("page") String page,
             @Query("api-key") String apiKey
     );
