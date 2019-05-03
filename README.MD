@@ -30,6 +30,7 @@
 ### Todos
 
  - Write tests
+ - Notifications
  
 ### Screenshots
 
@@ -74,6 +75,7 @@
 ### Todos
 
  - Escrever testes
+ - Notificações
  
 ### Contato
 - camila_c_araujo@outlook.com
